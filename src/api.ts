@@ -11,9 +11,13 @@ export interface ServerConfig {
   chunkSize: number
   free: TierInfo
   paid: TierInfo
-  freeMaxActiveBytes: number
+  /** Gratis cellen die tegelijk in gebruik mogen zijn. */
+  freeMaxActiveCells: number
+  /** 1 cel = zoveel bytes (100 MB) voor de kortste termijn. */
   cellBytes: number
   cellPriceCents: number
+  /** Cellen per `cellBytes` per bewaartermijn in dagen, bijvoorbeeld { "7": 1, "30": 2 }. */
+  cellsPerTerm: Record<string, number>
   sandbox: boolean
   oidc: { authority: string; clientId: string }
 }

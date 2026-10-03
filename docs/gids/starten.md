@@ -11,7 +11,7 @@ Met de open client-bibliotheek verstuur je bestanden vanuit je eigen code. Versl
 ## 2. Installeren
 
 ```bash
-npm install github:btech-stack/btransfer-client#v0.1.0
+npm install github:btech-stack/btransfer-client#v0.1.1
 ```
 
 ## 3. Versturen

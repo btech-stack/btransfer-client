@@ -46,3 +46,14 @@ describe('transfer', () => {
     expect(VERSION).toBe(JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).version)
   })
 })
+
+describe('cellen', () => {
+  const config = { cellBytes: 100_000_000, cellsPerTerm: { '3': 1, '7': 1, '30': 2 } }
+  it('rekent per begonnen 100 MB, maal de termijn', async () => {
+    const { countCells } = await import('../src/index.js')
+    expect(countCells(300, 7, config)).toBe(1)
+    expect(countCells(300, 30, config)).toBe(2)
+    expect(countCells(250_000_000, 7, config)).toBe(3)
+    expect(countCells(10_000_000_000, 30, config)).toBe(200)
+  })
+})

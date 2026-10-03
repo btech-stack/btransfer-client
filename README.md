@@ -12,7 +12,7 @@ Documentatie: [docs.btransfer.nl](https://docs.btransfer.nl) · API proberen: [p
 ## Installeren
 
 ```bash
-npm install github:btech-stack/btransfer-client#v0.1.0
+npm install github:btech-stack/btransfer-client#v0.1.1
 ```
 
 ## Versturen vanaf een server

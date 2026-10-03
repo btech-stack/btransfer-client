@@ -1,4 +1,4 @@
-import type { Api, DownloadInfo, Tier } from './api.js'
+import type { Api, DownloadInfo, ServerConfig, Tier } from './api.js'
 import { MANIFEST_LABEL, OVERHEAD, chunkLabel, decrypt, encrypt, exportKey, generateKey, importKey } from './crypto.js'
 
 // Werkt in de browser en in Node 20+: geen DOM-afhankelijkheden.
@@ -55,6 +55,12 @@ export interface UploadResult {
   storedBytes: number
   objectCount: number
   uploadMs: number
+}
+
+/** Aantal cellen voor een transfer: per begonnen `cellBytes`, maal het aantal cellen van de termijn; minimaal 1. */
+export function countCells(plaintextBytes: number, expiryDays: number, config: Pick<ServerConfig, 'cellBytes' | 'cellsPerTerm'>): number {
+  const units = Math.max(1, Math.ceil(plaintextBytes / config.cellBytes))
+  return units * (config.cellsPerTerm[String(expiryDays)] ?? 1)
 }
 
 /** Zet downloadtoken en sleutel samen tot de link die de ontvanger krijgt. */
