@@ -1,6 +1,6 @@
 {
   "name": "btransfer-client",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "End-to-end versleuteld bestanden versturen via BTransfer. De sleutel verlaat je apparaat alleen in de link.",
   "license": "Apache-2.0",
   "type": "module",

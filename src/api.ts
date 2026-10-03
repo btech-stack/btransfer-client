@@ -84,6 +84,8 @@ export interface TransferSummary {
   priceCents: number
   downloadedAt: string | null
   destroyedAt: string | null
+  /** Waar de versleutelde stukken stonden (bewijs). */
+  storageLabel?: string | null
 }
 
 export interface Account {
@@ -147,6 +149,14 @@ export function createApi(baseUrl = '', token?: string | (() => string | undefin
     account: () => call<Account>('GET', '/account'),
     topUp: (netCents: number) => call<{ checkoutUrl: string }>('POST', '/account/topups', { netCents }),
     testCredit: (cents: number) => call<void>('POST', '/account/test-credit', { cents }),
+    /** Je geschiedenis binnen de bewaartermijn (2 jaar), nieuwste eerst. */
+    history: () => call<TransferSummary[]>('GET', '/account/history'),
+    /** Al je gegevens als JSON (zonder bestandsinhoud: die kunnen we niet lezen). */
+    exportAccount: () => call<unknown>('GET', '/account/export'),
+    /** Stuurt een bevestigingslink om je account te wissen. */
+    requestWipe: () => call<void>('POST', '/account/wipe-request'),
+    /** Wist je account definitief, met het token uit de bevestigingsmail. */
+    wipe: (token: string) => call<void>('POST', '/account/wipe', { token }),
     apiKeys: () => call<ApiKey[]>('GET', '/account/api-keys'),
     createApiKey: (name: string) => call<ApiKey & { key: string }>('POST', '/account/api-keys', { name }),
     revokeApiKey: (id: string) => call<void>('DELETE', `/account/api-keys/${id}`),
@@ -156,12 +166,16 @@ export function createApi(baseUrl = '', token?: string | (() => string | undefin
       call<CreateTransferResponse>('POST', '/transfers', body),
     uploadUrls: (id: string, from: number, count: number) => call<PresignedUrl[]>('POST', `/transfers/${id}/upload-urls`, { from, count }),
     complete: (id: string, uploadMs: number) => call<CompleteResponse>('POST', `/transfers/${id}/complete`, { uploadMs }),
+    /** Nieuwe downloadlink als de ontvanger niet bevestigde; het oude token vervalt. Max 3 keer. */
+    newLink: (id: string) => call<{ downloadToken: string; newLinksLeft: number }>('POST', `/transfers/${id}/new-link`),
     reveal: (id: string, revealToken: string) => call<{ downloadToken: string }>('POST', `/transfers/${id}/reveal`, { revealToken }),
 
     downloadInfo: (token: string) => call<DownloadInfo>('GET', `/d/${token}`),
     downloadUrls: (token: string, from: number, count: number) => call<PresignedUrl[]>('POST', `/d/${token}/download-urls`, { from, count }),
     downloaded: (token: string, downloadMs: number) => call<void>('POST', `/d/${token}/downloaded`, { downloadMs }),
     confirm: (token: string) => call<void>('POST', `/d/${token}/confirm`),
+    /** Misbruik melden: de link wordt direct geblokkeerd. */
+    report: (token: string, reason: string, email?: string) => call<void>('POST', `/d/${token}/report`, { reason, email }),
   }
 }
 
