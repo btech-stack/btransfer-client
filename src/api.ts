@@ -19,6 +19,8 @@ export interface ServerConfig {
   /** Cellen per `cellBytes` per bewaartermijn in dagen, bijvoorbeeld { "7": 1, "30": 2 }. */
   cellsPerTerm: Record<string, number>
   sandbox: boolean
+  /** Productie vóór de lancering: alleen beheerders kunnen versturen. */
+  prelaunch?: boolean
   oidc: { authority: string; clientId: string }
 }
 
@@ -88,6 +90,18 @@ export interface TransferSummary {
   storageLabel?: string | null
 }
 
+export interface PaymentView {
+  id: string
+  createdAt: string | null
+  paidAt: string | null
+  netCents: number
+  grossCents: number
+  cells: number
+  status: 'paid' | 'refunded' | string
+  /** Tot wanneer terugbetalen kan (herroeping, alleen bij volledig ongebruikt tegoed); null = niet mogelijk. */
+  refundableUntil: string | null
+}
+
 export interface Account {
   email: string
   emailVerified: boolean
@@ -101,6 +115,7 @@ export interface Account {
   topUpOptionsCents: number[]
   vatPercent: number
   paymentsEnabled: boolean
+  payments: PaymentView[]
   ledger: LedgerEntry[]
   transfers: TransferSummary[]
 }
@@ -148,6 +163,8 @@ export function createApi(baseUrl = '', token?: string | (() => string | undefin
 
     account: () => call<Account>('GET', '/account'),
     topUp: (netCents: number) => call<{ checkoutUrl: string }>('POST', '/account/topups', { netCents }),
+    /** Herroeping: opwaardering volledig terugbetalen (binnen 14 dagen, tegoed nog ongebruikt). */
+    refund: (paymentId: string) => call<void>('POST', `/account/payments/${paymentId}/refund`),
     testCredit: (cents: number) => call<void>('POST', '/account/test-credit', { cents }),
     /** Je geschiedenis binnen de bewaartermijn (2 jaar), nieuwste eerst. */
     history: () => call<TransferSummary[]>('GET', '/account/history'),

@@ -1,2 +1,2 @@
 // Wordt bij elke release gelijk gehouden met package.json (gecontroleerd in de tests).
-export const VERSION = '0.2.0'
+export const VERSION = '0.3.0'
