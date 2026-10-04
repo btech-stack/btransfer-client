@@ -19,7 +19,7 @@ export default defineConfig({
         items: [
           { text: 'Snel starten', link: '/gids/starten' },
           { text: 'Hoe de versleuteling werkt', link: '/gids/versleuteling' },
-          { text: 'Cellen en prijzen', link: '/gids/cellen' },
+          { text: 'Cellen', link: '/gids/cellen' },
           { text: 'API-sleutels', link: '/gids/api-sleutels' },
           { text: 'Sandbox', link: '/gids/sandbox' },
         ],

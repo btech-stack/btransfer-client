@@ -1,17 +1,17 @@
-# Cellen en prijzen
+# Cellen
 
-**1 cel = 100 MB voor 7 dagen = € 0,01** (excl. btw). Je betaalt per cel, zonder abonnement.
+Je verbruik wordt geteld in **cellen**. **1 cel = 100 MB, 7 dagen beschikbaar.**
 
-| Transfer | Cellen | Prijs |
-| --- | --- | --- |
-| Bericht of klein bestand, 7 dagen | 1 | € 0,01 |
-| 250 MB, 7 dagen | 3 | € 0,03 |
-| 1 GB, 7 dagen | 10 | € 0,10 |
-| 1 GB, 30 dagen | 20 | € 0,20 |
-| 10 GB, 30 dagen | 200 | € 2,00 |
+| Transfer | Cellen |
+| --- | --- |
+| Bericht of klein bestand, 7 dagen | 1 |
+| 250 MB, 7 dagen | 3 |
+| 1 GB, 7 dagen | 10 |
+| 1 GB, 30 dagen | 20 |
+| 10 GB, 30 dagen | 200 |
 
 - **30 dagen** kost 2 cellen per 100 MB.
 - **Gratis:** iedereen heeft 10 gratis cellen tegelijk in gebruik, max 5 per transfer (500 MB), 3 dagen beschikbaar. Een cel komt vrij zodra de transfer vernietigd is.
-- **Opwaarderen** in stappen van € 5 (500 cellen), tot € 25.
+- **Tegoed kopen** voor grotere of langere transfers volgt bij de lancering.
 
-Vraag de prijs vooraf op met `POST /api/quote`.
+Vraag vooraf op hoeveel cellen een transfer kost met `POST /api/quote`, of reken het zelf uit met `countCells()` uit de bibliotheek.

@@ -36,11 +36,11 @@ console.log(result.link)
 
 Stuur `result.link` naar de ontvanger. Die heeft geen account nodig.
 
-## 4. Eerst de prijs weten
+## 4. Eerst weten hoeveel cellen het kost
 
 ```ts
 const quote = await api.quote({ tier: 'PAID', expiryDays: 7, plaintextBytes: data.length })
-// { cells: 1, priceCents: 1, allowed: true, ... }
+// { cells: 1, allowed: true, ... }
 ```
 
-Zie [Cellen en prijzen](./cellen).
+Zie [Cellen](./cellen).
