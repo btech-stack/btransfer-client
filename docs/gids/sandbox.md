@@ -5,6 +5,7 @@
 - Je logt in met je gewone BTransfer-account.
 - Betalen gaat via **Mollie in testmodus**: de echte betaalflow, maar zonder echt geld.
 - Transfers blijven **hooguit 24 uur** staan, ook als je 7 of 30 dagen kiest.
+- Bestanden tot **5 MB** per transfer: genoeg om je integratie te testen.
 - Saldo en transfers staan los van productie.
 
 Swagger: [playground.btransfer.nl/api/docs](https://playground.btransfer.nl/api/docs).
